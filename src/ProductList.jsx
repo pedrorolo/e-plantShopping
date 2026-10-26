@@ -18,6 +18,8 @@ function ProductList({ onHomeClick }) {
     dispatch(addItem(product)); // Dispatch the action to add the product to the cart (Redux action)
   };
 
+  const calculateTotalQuantity = () => { return cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0; };
+
   const plantsArray = [
     {
       category: "Air Purifying Plants",
@@ -297,7 +299,6 @@ function ProductList({ onHomeClick }) {
   };
 
   const handleContinueShopping = (e) => {
-    e.preventDefault();
     setShowCart(false);
   };
   return (
@@ -325,9 +326,9 @@ function ProductList({ onHomeClick }) {
             </a>
           </div>
           <div>
-            {" "}
             <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
               <h1 className="cart">
+                { calculateTotalQuantity()}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 256 256"
@@ -371,7 +372,7 @@ function ProductList({ onHomeClick }) {
                     <div className="product-title">{plant.name}</div> {/* Display plant name */}
                     {/* Display other plant details like description and cost */}
                     <div className="product-description">{plant.description}</div> {/* Display plant description */}
-                    <div className="product-cost">${plant.cost}</div> {/* Display plant cost */}
+                    <div className="product-cost">{plant.cost}</div> {/* Display plant cost */}
                     <button
                       className="product-button"
                       disabled={ isAddedToCart(plant) }
