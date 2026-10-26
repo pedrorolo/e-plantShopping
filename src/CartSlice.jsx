@@ -19,12 +19,15 @@ export const CartSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
-      const name= action.payload;
-      state.items = state.items.filter(({ name }) => name !== name)
+      const name = action.payload;
+      state.items = state.items.filter(item => item.name !== name);
     },
     updateQuantity: (state, action) => {
       const { name, quantity } = action.payload;
-      state.items.find(({ name }) => name === name).quantity = quantity;
+      const item = state.items.find(i => i.name === name);
+      if (item) {
+        item.quantity = quantity;
+      }
     },
   },
 });
